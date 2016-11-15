@@ -1,0 +1,22 @@
+{
+    "name": "parishop/messages",
+    "description": "Message Alert",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vadim Meling",
+            "email": "vadim@meling.ru"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Parishop\\": "src/Parishop"
+        }
+    },
+    "require": {
+        "psr/log": "~1.0",
+        "monolog/monolog": "~1.0"
+    }
+}
+
