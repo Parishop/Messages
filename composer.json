@@ -1,7 +1,6 @@
 {
     "name": "parishop/messages",
     "description": "Message Alert",
-    "minimum-stability": "dev",
     "license": "MIT",
     "authors": [
         {
@@ -11,12 +10,13 @@
     ],
     "autoload": {
         "psr-4": {
-            "Parishop\\": "src/Parishop"
+            "Parishop\\": "src/Parishop",
+            "Parishop\\Tests\\": "tests/Parishop/Tests"
         }
     },
     "require": {
         "psr/log": "~1.0",
-        "monolog/monolog": "~1.0"
+        "phpixie/http": "~3.0"
     }
 }
 
