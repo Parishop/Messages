@@ -6,7 +6,7 @@ namespace Parishop;
  * @package Parishop
  * @since   1.0
  */
-class Messages extends \ArrayObject
+class Messages extends \ArrayObject implements \PHPixie\Template\Extensions\Extension
 {
     use \Psr\Log\LoggerTrait;
 
@@ -26,14 +26,26 @@ class Messages extends \ArrayObject
      * @param \PHPixie\HTTP\Context $context
      * @since 1.0
      */
-    public function __construct(\PHPixie\HTTP\Context $context)
+    public function __construct($context)
     {
         parent::__construct([], 0);
         $this->context = $context;
-        if(!$this->context->session()->exists('messages')) {
-            $this->context->session()->set('messages', []);
+        if($this->context) {
+            if(!$this->context->session()->exists('messages')) {
+                $this->context->session()->set('messages', []);
+            }
+            $this->messages = $this->context->session()->get('messages');
         }
-        $this->messages = $this->context->session()->get('messages');
+    }
+
+    /**
+     * Map of method aliases
+     * @return array
+     * @since 1.0.1
+     */
+    public function aliases()
+    {
+        return [];
     }
 
     /**
@@ -53,6 +65,16 @@ class Messages extends \ArrayObject
     }
 
     /**
+     * @param string $message
+     * @param array  $context
+     * @since 1.0.1
+     */
+    public function danger($message, array $context = array())
+    {
+        $this->log('danger', $message, $context);
+    }
+
+    /**
      * @param string $level
      * @param string $message
      * @param array  $context
@@ -61,7 +83,31 @@ class Messages extends \ArrayObject
     public function log($level, $message, array $context = array())
     {
         $this->messages[$level][] = new Messages\Message($level, $message, $context);
-        $this->context->session()->set('messages', $this->messages);
+        if($this->context) {
+            $this->context->session()->set('messages', $this->messages);
+        }
+    }
+
+    /**
+     * Map of methods that should be available in templates.
+     * @return array
+     * @since 1.0.1
+     */
+    public function methods()
+    {
+        return [
+            'messages' => 'asArray',
+        ];
+    }
+
+    /**
+     * Extension name
+     * @return string
+     * @since 1.0.1
+     */
+    public function name()
+    {
+        return 'messages';
     }
 
 }
