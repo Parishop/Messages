@@ -16,8 +16,7 @@
     },
     "require": {
         "psr/log": "~1.0",
-        "phpixie/http": "~3.0",
-        "phpixie/template": "~3.0"
+        "phpixie/framework": "~3.0"
     }
 }
 
